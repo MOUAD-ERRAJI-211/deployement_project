@@ -90,7 +90,7 @@ public class FileService {
         StringBuilder sb = new StringBuilder(s.length());
         boolean next = true;
         for (char c : s.toCharArray()) {
-            sb.append(Character.isSpaceChar(c) ? (next = true) && c : next ? (next = false) | (c = Character.toTitleCase(c)) | c : Character.toLowerCase(c));
+            sb.append(next ? Character.toTitleCase(c) : (Character.isSpaceChar(c) ? c : Character.toLowerCase(c))); if (Character.isSpaceChar(c)) next = true; else if (next) next = false;
         }
         return sb.toString();
     }
@@ -104,3 +104,4 @@ public class FileService {
     private String levelDuration(String l) { return "advanced".equals(l) ? "60 min" : "intermediate".equals(l) ? "45 min" : "30 min"; }
     private int levelQuestions(String l) { return "advanced".equals(l) ? 35 : "intermediate".equals(l) ? 25 : 15; }
 }
+
