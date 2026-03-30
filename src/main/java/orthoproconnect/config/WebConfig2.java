@@ -11,10 +11,10 @@ import java.nio.file.Paths;
 @Configuration
 public class WebConfig2 implements WebMvcConfigurer {
 
-    @Value("${app.docs.dir}")
+    @Value("${app.docs-dir}")
     private String docsDirectory;
 
-    @Value("${app.tests.dir}")
+    @Value("${app.tests-dir}")
     private String testsDirectory;
 
     @Override
