@@ -1,11 +1,10 @@
 package orthoproconnect.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,24 +12,24 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
-    @Value(${app.cors.allowed-origins:http://localhost:5500,http://127.0.0.1:5500}")
-    private String allowedOrigins;
-
     @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        List<String> origins = Arrays.asList(allowedOrigins.split(","));
-        origins.forEach(o -> config.addAllowedOrigin(o.trim()));
-        config.addAllowedOrigin("http://localhost:5500");
-        config.addAllowedOrigin("http://127.0.0.1:5500");
-        config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedMethod("*");
-        config.addAllowedHeader("*");
-        config.addExposedHeader("Authorization");
-        config.addExposedHeader("Content-Disposition");
+        config.setAllowedOrigins(Arrays.asList(
+            "https://orthobiblio.netlify.app",
+            "https://orthoprostock.netlify.app",
+            "http://localhost:5500",
+            "http://127.0.0.1:5500",
+            "http://localhost:3000",
+            "http://localhost:8080"
+        ));
+        config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(Arrays.asList("Authorization","Content-Disposition"));
+        config.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+        return source;
     }
 }
