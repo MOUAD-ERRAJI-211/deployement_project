@@ -1,2 +1,4 @@
 [deploy]
 startCommand = "java -Djava.net.preferIPv4Stack=true -jar build/libs/orthoproconnect.jar"
+healthcheckPath = ""
+healthcheckTimeout = 0
