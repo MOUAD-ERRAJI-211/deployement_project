@@ -1,10 +1,2 @@
-[build]
-builder = "nixpacks"
-buildCommand = "./gradlew bootJar -x test"
-
 [deploy]
-startCommand = "java -jar build/libs/orthoproconnect.jar"
-healthcheckPath = "/api/health"
-healthcheckTimeout = 60
-restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 3
+startCommand = "java -Djava.net.preferIPv4Stack=true -jar build/libs/orthoproconnect.jar"
